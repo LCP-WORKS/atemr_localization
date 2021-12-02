@@ -8,16 +8,18 @@
   <arg name="y_init_pose" default="0.0"/>
   <arg name="z_init_pose" default="0.0"/>
 
+  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG )"/>
   <arg name="global_frame" default="$(optenv ROBOT_GLOBAL_FRAME_CONFIG map)"/>
   <arg name="odom_frame" default="$(optenv ROBOT_ODOMETRY_FRAME_CONFIG odom)"/>
   <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
-  <arg name="map_topic" default="$(domain)/map"/>
+  <arg name="map_topic" default="$(arg domain)/map"/>
   <arg name="scan_topic" default="$(arg domain)/laser/scan_filtered"/>
   <arg name="odom_model_type" default="$(optenv ROBOT_LOCALIZATION_ODOM_MODEL diff)"/> <!-- omni -->
 
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
     <remap from="scan" to="$(arg scan_topic)"/>
     <remap from="map" to="$(arg map_topic)"/>
+    <remap from="amcl_pose" to="$(arg domain)/amcl_pose"/>
     <rosparam command="load" file="$(arg config_path)/amcl.yaml" subst_value="true"/>
   </node>
 

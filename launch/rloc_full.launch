@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find atemr_localization)/launch/rloc_odom.launch" />
+  <include file="$(find atemr_localization)/launch/rloc_world.launch" />
+
+</launch>

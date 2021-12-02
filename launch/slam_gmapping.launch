@@ -4,14 +4,16 @@
   <arg name="config_folder" default="config"/>
   <arg name="config_path" default="$(eval find(config_package) + '/' + config_folder)"/>
 
+  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG )"/>
   <arg name="global_frame" default="$(optenv ROBOT_GLOBAL_FRAME_CONFIG map)"/>
   <arg name="odom_frame" default="$(optenv ROBOT_ODOMETRY_FRAME_CONFIG odom)"/>
   <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
-  <arg name="map_topic" default="$(domain)/map"/>
+  <arg name="map_topic" default="$(arg domain)/map"/>
   <arg name="scan_topic" default="$(arg domain)/laser/scan_filtered"/>
 
   <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping_node">
     <remap from="scan" to ="$(arg scan_topic)"/>
+    <remap from="map" to="$(arg domain)/map" />
     <rosparam command="load" file="$(arg config_path)/gmapping.yaml" subst_value="true"/>
   </node>
 

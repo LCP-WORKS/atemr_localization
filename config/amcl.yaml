@@ -1,13 +1,14 @@
 # Publish scans from best pose at a max of 10 Hz 
-use_map_topic: false
-selective_resampling: true
-odom_model_type: $(arg odom_model_type)
+tf_broadcast: false
+use_map_topic: true
+selective_resampling: false
+odom_model_type: diff #$(arg odom_model_type)
 odom_alpha5: 0.1
 transform_tolerance: 0.2
 gui_publish_rate: 10.0
 laser_max_beams: 30
-min_particles: 500
-max_particles: 5000
+min_particles: 100
+max_particles: 3000
 kld_err: 0.05
 kld_z: 0.99
 odom_alpha1: 0.2
@@ -27,9 +28,9 @@ laser_model_type: likelihood_field
 laser_likelihood_max_dist: 2.0
 update_min_d: 0.2
 update_min_a: 0.5
-odom_frame_id: $(arg odom_frame)
-base_frame_id: $(arg base_frame)
-global_frame_id: $(arg global_frame)
+odom_frame_id: odom #$(arg odom_frame)
+base_frame_id: base_footprint #$(arg base_frame)
+global_frame_id: map #$(arg global_frame)
 resample_interval: 1
 transform_tolerance: 0.1
 recovery_alpha_slow: 0.0

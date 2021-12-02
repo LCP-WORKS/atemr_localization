@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG atemr)"/>
+  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG )"/>
+  <arg name="map_topic" default="$(arg domain)/map"/>
   <arg name="config_package" default="$(optenv ROBOT_LOCALIZATION_CONFIG_PACKAGE atemr_localization)"/>
   <arg name="maps_folder" default="maps"/>
   <arg name="maps_path" default="$(eval find(config_package) + '/' + maps_folder)"/>
-  <arg name="map_name" default="blank"/>
+  <arg name="map_name" default="blank0"/>
 
   <!-- Run the map server (saver)-->
   <node name="map_saver_node" pkg="map_server" type="map_saver" args="-f $(arg maps_path)/$(arg map_name)">
