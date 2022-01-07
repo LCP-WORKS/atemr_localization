@@ -26,7 +26,7 @@ class mapMaker:
 	  bw = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	  _, bin_img = cv2.threshold(bw, 240, 255, cv2.THRESH_BINARY)
 	  res_img = cv2.resize(bin_img, None, fx=sx, fy=sy, interpolation = cv2.INTER_CUBIC)
-	  cv2.imwrite(os.path.join(self.pkgpath, self.dirname[0], self.args.filename), res_img)
+	  cv2.imwrite(os.path.join(self.pkgpath, self.dirname[0], self.dirname[0] + '.pgm'), res_img)
 	
 	def create_yaml(self):
 	  yaml = open(os.path.join(self.pkgpath, self.dirname[0], self.dirname[0] + '.yaml'), "w")
