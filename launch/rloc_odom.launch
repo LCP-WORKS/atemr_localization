@@ -27,23 +27,23 @@
 
       <!-- from summit odom, we only take vx and vy. even if the robot is differential (cannot strafe, vy != 0) is good to fuse vy -->
       <rosparam param="odom0_config">[true, true, false,
-                                      false, false, false,
+                                      false, false, true,
                                       false, false, false,
                                       false, false, false,
                                       false, false, false]</rosparam>
 
       <rosparam param="pose0_config">[true, true, true,
-                                     false, false, false,
+                                     false, false, true,
                                      false, false, false,
                                      false, false, false,
                                      false, false, false]</rosparam>
 
       <!-- if two or more sources provide absolute pose (position + orientation), the _differential parametet MUST BE TRUE for ALL of them except for ONE --> 
       <param name="odom0_differential" value="true"/>
-      <param name="pose0_differential" value="false" />
+      <param name="pose0_differential" value="true" />
 
-      <param name="odom0_queue_size" value="10" />
-      <param name="pose0_queue_size" value="10" />
+      <param name="odom0_queue_size" value="5" />
+      <param name="pose0_queue_size" value="5" />
 
       <!-- if the _relative parameter is set to TRUE, the initial state is the origin for both position and orientation -->
       <param name="odom0_relative" value="false"/>
