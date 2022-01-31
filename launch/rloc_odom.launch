@@ -6,12 +6,12 @@
   <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
 
   <arg name="odom_topic" default="base_controller/odom"/>
-  <arg name="imu_topic" default="$(arg domain)/imu/data"/>
+  <arg name="pose_topic" default="pose_stamped"/>
 
      <!-- ekf_loc1 fuses only continuous data (imu and odometry). Publish the tf from odom_frame to base_footprint -->
    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_loc_odom" clear_params="true" output="screen">      
       <remap from="odometry/filtered" to="$(arg domain)/odometry/filtered_odom" />
-      <param name="frequency" value="45"/>
+      <param name="frequency" value="30"/>
       <param name="sensor_timeout" value="0.1"/>
       <param name="publish_tf" type="bool" value="true"/>
       <param name="two_d_mode" type="bool" value="true"/> 
@@ -23,7 +23,7 @@
       -->
       <param name="world_frame" value="$(arg odom_frame)"/>
       <param name="odom0" value="$(arg odom_topic)"/>
-      <param name="imu0" value="$(arg imu_topic)"/>
+      <param name="pose0" value="$(arg pose_topic)"/>
 
       <!-- from summit odom, we only take vx and vy. even if the robot is differential (cannot strafe, vy != 0) is good to fuse vy -->
       <rosparam param="odom0_config">[true, true, false,
@@ -32,25 +32,23 @@
                                       false, false, false,
                                       false, false, false]</rosparam>
 
-      <!-- Be careful when setting the z-orientation value to true because you are going to fuse orientation data 
-	coming from an attitude estimatior which is more likely to use a (slow-response) compass -->	
-      <rosparam param="imu0_config">[false, false, false,
-                                     false, false, false, 
+      <rosparam param="pose0_config">[true, true, true,
                                      false, false, false,
-                                     false, false, true,
-                                     true, false, false]</rosparam>
+                                     false, false, false,
+                                     false, false, false,
+                                     false, false, false]</rosparam>
 
       <!-- if two or more sources provide absolute pose (position + orientation), the _differential parametet MUST BE TRUE for ALL of them except for ONE --> 
       <param name="odom0_differential" value="true"/>
-      <param name="imu0_differential" value="false" />
+      <param name="pose0_differential" value="false" />
+
+      <param name="odom0_queue_size" value="10" />
+      <param name="pose0_queue_size" value="10" />
 
       <!-- if the _relative parameter is set to TRUE, the initial state is the origin for both position and orientation -->
       <param name="odom0_relative" value="false"/>
-      <!-- Set to false when fusing an absolute orientation estimation (e.g. coming from an attitude 
-	estimator which using a magnetic compass)-->
-      <param name="imu0_relative" value="false"/>
-    
-      <param name="imu0_remove_gravitational_acceleration" type="bool" value="true"/>
+      <param name="pose0_relative" value="false"/>
+
       <param name="print_diagnostics" value="false"/>
    </node>
 
