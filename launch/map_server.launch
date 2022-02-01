@@ -18,7 +18,7 @@
 		<remap from="map" to="$(arg map_topic)"/>
 	</node>
 
-  <!-- Publish robot pose (web-UI)-->
+  <!-- Publish robot pose (web-UI) (publishes tf b/n base frame and map frame)-->
   <node name="robot_pose_publisher" pkg="robot_pose_publisher" type="robot_pose_publisher"/>
 
 </launch>

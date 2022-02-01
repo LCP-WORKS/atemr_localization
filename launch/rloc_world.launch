@@ -5,14 +5,14 @@
   <arg name="odom_frame" default="$(optenv ROBOT_ODOMETRY_FRAME_CONFIG odom)"/>
   <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
 
-  <arg name="odom_topic" default="$(arg domain)/odom"/>
-  <arg name="imu_topic" default="$(arg domain)/imu/data"/>
+  <arg name="odom_topic" default="$(arg domain)/odometry/filtered_odom"/>
+  <!--arg name="imu_topic" default="$(arg domain)/imu/data"/-->
   <arg name="pose_topic" default="$(arg domain)/amcl_pose"/>
 
   <!-- ekf_loc2 fuses all surces of data (imu, odometry and map odom). Publish the tf from world frame to base_footprintt -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_loc_world" clear_params="true" output="screen">
       <remap from="odometry/filtered" to="$(arg domain)/odometry/filtered_world" />
-      <param name="frequency" value="30"/>
+      <param name="frequency" value="10"/>
       <param name="sensor_timeout" value="0.1"/>
       <param name="two_d_mode" value="true"/>
       <param name="publish_tf" value="true"/>
@@ -25,9 +25,7 @@
       <param name="world_frame" value="$(arg global_frame)"/>
 
       <!-- use the previously fused odometry, which integrates already the robot odometry and imu -->
-      <param name="odom0" value="$(arg domain)/odometry/filtered_odom"/>
-      <!--<param name="imu0" value="/imu_data"/> -->
-
+      <param name="odom0" value="$(arg odom_topic)"/>
       <!-- use the "map pose" from amcl, which has the position in the odom frame -->
       <param name="pose0" value="$(arg pose_topic)"/>
 
