@@ -9,7 +9,7 @@
   <arg name="odom_frame" default="$(optenv ROBOT_ODOMETRY_FRAME_CONFIG odom)"/>
   <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
   <arg name="map_topic" default="$(arg domain)/map"/>
-  <arg name="scan_topic" default="$(arg domain)/scan_filtered"/>
+  <arg name="scan_topic" default="$(arg domain)/scan"/>
 
   <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping_node">
     <remap from="scan" to ="$(arg scan_topic)"/>
