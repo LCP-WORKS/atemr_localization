@@ -30,5 +30,5 @@ llsamplerange: 0.02
 llsamplestep: 0.01
 lasamplerange: 0.005
 lasamplestep: 0.005
-occ_thresh: 0.10
+occ_thresh: 0.25
 minimumScore: 1000

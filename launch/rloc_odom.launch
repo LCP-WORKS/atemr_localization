@@ -7,7 +7,7 @@
 
   <arg name="odom_topic" default="base_controller/odom"/>
   <arg name="pose_topic" default="/pose_with_covariance_stamped"/>
-  <arg name="hector_odom_topic" default="/scanmatch_odom"/>
+  <arg name="hector_odom_topic" default="/hodom_scanmatch_odom"/>
 
      <!-- ekf_loc1 fuses only continuous data (imu and odometry). Publish the tf from odom_frame to base_footprint -->
    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_loc_odom" clear_params="true" output="screen">      
