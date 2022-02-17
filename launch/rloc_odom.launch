@@ -7,7 +7,7 @@
 
   <arg name="odom_topic" default="/base_controller/odom"/>
   <arg name="pose_topic" default="/pose_with_covariance_stamped"/>
-  <arg name="hector_odom_topic" default="/hodom_scanmatch_odom"/>
+  <!--arg name="hector_odom_topic" default="/hodom_scanmatch_odom"/-->
   <arg name="imu_topic" default="/imu/data"/>
 
      <!-- ekf_loc1 fuses only continuous data (imu and odometry). Publish the tf from odom_frame to base_footprint -->
@@ -25,7 +25,7 @@
       -->
       <param name="world_frame" value="$(arg odom_frame)"/>
       <param name="odom0" value="$(arg odom_topic)"/>
-      <param name="odom1" value="$(arg hector_odom_topic)"/>
+      <!--param name="odom1" value="$(arg hector_odom_topic)"/-->
       <param name="pose0" value="$(arg pose_topic)"/>
       <param name="imu0" value="$(arg imu_topic)"/>
 
@@ -36,11 +36,11 @@
                                       false, false, true,
                                       true, false, false]</rosparam>
                                       
-      <rosparam param="odom1_config">[false, false, false,
+      <!--rosparam param="odom1_config">[false, false, false,
                                       false, false, false,
                                       false,  false, false,
                                       false, false, false,
-                                      false, false, false]</rosparam>
+                                      false, false, false]</rosparam-->
                                       
       <rosparam param="pose0_config">[false, false, false,
                                      false, false, false,
@@ -56,17 +56,17 @@
 
       <!-- if two or more sources provide absolute pose (position + orientation), the _differential parametet MUST BE TRUE for ALL of them except for ONE --> 
       <param name="odom0_differential" value="true"/>
-      <param name="odom1_differential" value="true"/>
+      <!--param name="odom1_differential" value="true"/-->
       <param name="pose0_differential" value="false" />
 
       <param name="odom0_queue_size" value="15" />
       <param name="pose0_queue_size" value="20" />
-      <param name="odom1_queue_size" value="8" />
+      <!--param name="odom1_queue_size" value="8" /-->
       <param name="imu0_queue_size" value="10" />
 
       <!-- if the _relative parameter is set to TRUE, the initial state is the origin for both position and orientation -->
       <param name="odom0_relative" value="false"/>
-      <param name="odom1_relative" value="false"/>
+      <!--param name="odom1_relative" value="false"/-->
       <param name="pose0_relative" value="false"/>
       <param name="imu0_relative" value="true"/>
 
