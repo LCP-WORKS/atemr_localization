@@ -5,10 +5,10 @@
   <arg name="odom_frame" default="$(optenv ROBOT_ODOMETRY_FRAME_CONFIG odom)"/>
   <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
 
-  <arg name="odom_topic" default="base_controller/odom"/>
+  <arg name="odom_topic" default="/base_controller/odom"/>
   <arg name="pose_topic" default="/pose_with_covariance_stamped"/>
   <arg name="hector_odom_topic" default="/hodom_scanmatch_odom"/>
-  <arg name="imu_topic" default="imu"/>
+  <arg name="imu_topic" default="/imu/data"/>
 
      <!-- ekf_loc1 fuses only continuous data (imu and odometry). Publish the tf from odom_frame to base_footprint -->
    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_loc_odom" clear_params="true" output="screen">      
@@ -30,22 +30,22 @@
       <param name="imu0" value="$(arg imu_topic)"/>
 
       <!-- from summit odom, we only take vx and vy. even if the robot is differential (cannot strafe, vy != 0) is good to fuse vy -->
-      <rosparam param="odom0_config">[true, true, false,
+      <rosparam param="odom0_config">[false, false, false,
                                       false, false, true,
-                                      false, false, false,
+                                      true, true, false,
                                       false, false, true,
-                                      false, false, false]</rosparam>
+                                      true, false, false]</rosparam>
                                       
-      <rosparam param="odom1_config">[true, true, false,
+      <rosparam param="odom1_config">[false, false, false,
                                       false, false, false,
                                       false,  false, false,
                                       false, false, false,
                                       false, false, false]</rosparam>
                                       
-      <rosparam param="pose0_config">[true, true, false,
-                                     false, false, true,
+      <rosparam param="pose0_config">[false, false, false,
                                      false, false, false,
-                                     false, false, true,
+                                     true, true, false,
+                                     false, false, false,
                                      false, false, false]</rosparam>
 
       <rosparam param="imu0_config">[false, false, false,
@@ -56,19 +56,19 @@
 
       <!-- if two or more sources provide absolute pose (position + orientation), the _differential parametet MUST BE TRUE for ALL of them except for ONE --> 
       <param name="odom0_differential" value="true"/>
-      <param name="odom1_differential" value="false"/>
-      <param name="pose0_differential" value="true" />
+      <param name="odom1_differential" value="true"/>
+      <param name="pose0_differential" value="false" />
 
-      <param name="odom0_queue_size" value="10" />
-      <param name="pose0_queue_size" value="15" />
-      <param name="odom1_queue_size" value="15" />
-      <param name="imu0_queue_size" value="5" />
+      <param name="odom0_queue_size" value="15" />
+      <param name="pose0_queue_size" value="20" />
+      <param name="odom1_queue_size" value="8" />
+      <param name="imu0_queue_size" value="10" />
 
       <!-- if the _relative parameter is set to TRUE, the initial state is the origin for both position and orientation -->
       <param name="odom0_relative" value="false"/>
       <param name="odom1_relative" value="false"/>
       <param name="pose0_relative" value="false"/>
-      <param name="imu0_relative" value="false"/>
+      <param name="imu0_relative" value="true"/>
 
       <param name="print_diagnostics" value="false"/>
       <param name="use_control" value="false"/>
