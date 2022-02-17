@@ -7,6 +7,7 @@
 
   <arg name="odom_topic" default="$(arg domain)/odometry/filtered_odom"/>
   <arg name="pose_topic" default="$(arg domain)/amcl_pose"/>
+  <arg name="imu_topic" default="/imu/data"/>
 
   <!-- ekf_loc2 fuses all sources of data (odometry and map odom). Publish the tf from world frame to base_footprintt -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_loc_world" clear_params="true" output="screen">
@@ -27,6 +28,7 @@
       <param name="odom0" value="$(arg odom_topic)"/>
       <!-- use the "map pose" from amcl, which has the position in the odom frame -->
       <param name="pose0" value="$(arg pose_topic)"/>
+      <param name="imu0" value="$(arg imu_topic)"/>
 
 
       <!-- from odom, use all values, except for acceleration -->
@@ -42,6 +44,11 @@
                                       false, false, false,
                                       false, false, true,
                                       false, false, false]</rosparam>
+      <rosparam param="imu0_config">[false, false, false,
+                                     false, false, true,
+                                     false, false, false,
+                                     false, false, true,
+                                     false, false, false]</rosparam>
 
       <!-- odom0_differential must be true, because we are taking the absolute position from map -->
       <param name="odom0_differential" value="true"/>
@@ -51,9 +58,12 @@
       <param name="odom0_relative" value="false"/>
       <!-- odom1_relative MUST BE false, because we want absolute positions -->
       <param name="pose0_relative" value="false"/>
+      <param name="imu0_relative" value="true"/>
 
       <param name="odom0_queue" value="20"/>
       <param name="pose0_queue" value="15"/>
+      <param name="imu0_queue_size" value="10" />
+
       <param name="print_diagnostics" value="false"/>
 
       <!-- process covariance matrix, could be improved -->
